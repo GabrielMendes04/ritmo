@@ -1,0 +1,17 @@
+{
+  "name": "Ritmo",
+  "short_name": "ritmo",
+  "description": "Planejador de rotina: tarefas, rotina semanal, calendário, hábitos, metas e anotações.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F5F7F5",
+  "theme_color": "#1F2937",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
