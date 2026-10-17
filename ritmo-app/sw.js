@@ -1,5 +1,5 @@
 // Ritmo – service worker: deixa o app abrir mesmo sem internet.
-const CACHE = 'ritmo-v4';
+const CACHE = 'ritmo-v5';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './firebase-config.js', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon.svg'];
 // Arquivos de fora que podem ficar em cache (fontes e bibliotecas do Firebase).
 // O banco de dados e o login (firestore/googleapis) nunca passam pelo cache.

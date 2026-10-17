@@ -265,6 +265,20 @@ form.mbody{padding:16px 20px 20px;display:flex;flex-direction:column;gap:14px}
   .tl-block{font-size:0;padding:0}
 }
 .storebtn{display:none}
+/* animação do logo na barra lateral */
+.brand{cursor:default}
+.brand .seg{transform-origin:50px 50px}
+.brand .sun{transform-origin:79.3px 32.8px}
+.brand:hover .seg{animation:logoSpin .9s cubic-bezier(.3,1.3,.5,1)}
+.brand:hover .sun{animation:sunHop .9s ease}
+.brand b span{display:inline-block;transition:transform .3s cubic-bezier(.3,1.6,.5,1),color .3s}
+.brand:hover b span{transform:translateY(-3px);color:var(--side-accent)}
+.brand:hover b span:nth-child(2){transition-delay:.04s}.brand:hover b span:nth-child(3){transition-delay:.08s}.brand:hover b span:nth-child(4){transition-delay:.12s}.brand:hover b span:nth-child(5){transition-delay:.16s}
+.brand small{transition:color .3s}
+.brand:hover small{color:var(--side-ink)}
+@keyframes logoSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes sunHop{0%{transform:scale(1)}35%{transform:scale(1.45)}65%{transform:scale(.9)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.brand *{animation:none!important;transition:none!important}.brand:hover b span{transform:none}}
 @media (max-width: 900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width: 640px){.hbar{grid-template-columns:70px minmax(0,1fr) auto}.hbar .v{min-width:0}.chart{height:160px}}
 .alerts{position:fixed;top:calc(16px + env(safe-area-inset-top, 0px));right:max(16px, env(safe-area-inset-right, 0px));z-index:60;display:flex;flex-direction:column;gap:10px;width:min(360px,calc(100% - 32px))}
@@ -301,10 +315,13 @@ p.warn{display:block;margin:-6px 0 0;font-size:13px}
 .subrow{display:flex;gap:6px;align-items:center}
 .subrow input{flex:1;min-width:0}
 .rowacts{display:flex;align-items:center}
+.calpick{display:flex;flex-direction:column;gap:2px;background:var(--sunken);border-radius:12px;padding:12px 14px}
+.calpick b{font-size:15px}
+.calpick span{font-size:13px;color:var(--muted)}
 .grip{cursor:grab;touch-action:none}
 .cell .ev{cursor:grab;touch-action:none}
 .cell.dropover{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
-.ghost{position:fixed;z-index:70;pointer-events:none;background:var(--surface);color:var(--ink);border:1.5px solid var(--accent);border-radius:10px;padding:6px 10px;font-size:13px;font-weight:600;box-shadow:var(--shadow);transform:translate(-50%,-130%);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dragghost{position:fixed;z-index:70;pointer-events:none;background:var(--surface);color:var(--ink);border:1.5px solid var(--accent);border-radius:10px;padding:6px 10px;font-size:13px;font-weight:600;box-shadow:var(--shadow);transform:translate(-50%,-130%);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 body.dragging{user-select:none;-webkit-user-select:none;cursor:grabbing}
 .dnd-hint{font-size:12.5px;color:var(--muted);margin:-4px 0 10px}
 /* estatísticas */
@@ -343,99 +360,165 @@ body.dragging{user-select:none;-webkit-user-select:none;cursor:grabbing}
 .cell .dots i{width:6px;height:6px;border-radius:50%;background:var(--cc)}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
 
-.login{position:fixed;inset:0;z-index:80;background:var(--side-bg);color:#F5F7F5;overflow:auto;display:flex;isolation:isolate}
-.login-deco{position:absolute;right:-180px;top:-160px;width:620px;height:620px;pointer-events:none;z-index:-1;opacity:.5}
-.login-deco2{position:absolute;left:-140px;bottom:-200px;width:420px;height:420px;pointer-events:none;z-index:-1;opacity:.35}
-.login-wrap{margin:auto;width:min(1100px,100%);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding-block:40px;padding-left:max(24px, env(safe-area-inset-left, 0px));padding-right:max(24px, env(safe-area-inset-right, 0px))}
-.lh{display:flex;flex-direction:column;gap:22px;min-width:0}
-.lh-brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:-.02em}
-.lh h1{font-size:clamp(34px,5vw,58px);font-weight:800;letter-spacing:-.035em;line-height:1.02;color:#FFFFFF}
-.lh h1 em{font-style:normal;color:var(--sun)}
-.lh p.lead{margin:0;font-size:17px;line-height:1.55;color:#C9D1DB;max-width:44ch}
-.dm-b{transform-origin:left center;animation:blkIn .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 130ms + 350ms)}
-@keyframes blkIn{from{opacity:0;transform:scaleX(.3)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.lh > *{animation:riseIn .6s cubic-bezier(.2,.8,.2,1) both}
-.lh > *:nth-child(2){animation-delay:.08s}.lh > *:nth-child(3){animation-delay:.16s}.lh > *:nth-child(4){animation-delay:.24s}.lh > *:nth-child(5){animation-delay:.32s}
-.login-card{animation:riseIn .7s .1s cubic-bezier(.2,.8,.2,1) both}
-@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.gbtn:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.login{position:fixed;inset:0;z-index:80;background:var(--surface);color:var(--ink);overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column}
+.lg-top{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--f-display);font-weight:800;font-size:19px;letter-spacing:-.02em;padding:18px max(22px, env(safe-area-inset-right, 0px)) 0 max(22px, env(safe-area-inset-left, 0px))}
+.lg-main{flex:1;display:flex;align-items:center;justify-content:center;padding:32px max(22px, env(safe-area-inset-right, 0px)) 32px max(22px, env(safe-area-inset-left, 0px))}
+.lg-col{width:100%;max-width:340px;display:flex;flex-direction:column;animation:riseIn .5s cubic-bezier(.2,.8,.2,1) both}
+.lg-col h1{font-size:clamp(32px,7vw,42px);font-weight:800;letter-spacing:-.035em;line-height:1.08;margin:0 0 10px}
+.lg-col h1 em{font-style:normal;background:linear-gradient(transparent 62%,color-mix(in srgb,var(--sun) 45%,transparent) 62%);padding:0 2px}
+.lg-sub{margin:0 0 28px;color:var(--muted);font-size:17px;font-weight:500;line-height:1.4}
+.gbtn{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:10px 14px;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,15,15,.06);transition:background .15s}
+.gbtn:hover:not(:disabled){background:var(--sunken,#F1F3F2)}
+.gbtn:disabled{opacity:.6;cursor:default}
+.gbtn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .gbtn .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--accent);animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loff{width:100%;display:flex;align-items:center;gap:8px;text-align:left;background:color-mix(in srgb,var(--sun) 15%,var(--surface));border:1px solid color-mix(in srgb,var(--sun) 45%,transparent);color:var(--ink);border-radius:12px;padding:9px 12px;font-size:13px;font-weight:600}
+.login .err{margin:12px 0 0;font-size:13.5px;color:var(--danger);font-weight:600}
+.lg-brand{display:flex;align-items:center;gap:8px}
+.lg-nav{display:flex;align-items:center;gap:18px;font-family:var(--f-body);font-size:14px;font-weight:500;letter-spacing:0}
+.lk{border:0;background:none;padding:0;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.lk:focus-visible{outline:2px solid var(--sun);outline-offset:2px;border-radius:3px}
+.lg-nav .lk{text-decoration:none;color:var(--muted)}
+.lg-nav .lk:hover{color:var(--ink)}
+.lg-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12.5px;margin:18px 0 10px}
+.lg-or::before,.lg-or::after{content:"";flex:1;height:1px;background:var(--line)}
+#eform{display:flex;flex-direction:column;gap:6px}
+#eform label{font-size:12.5px;font-weight:600;color:var(--muted);margin-top:6px}
+#eform input{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
+#eform input::placeholder{color:color-mix(in srgb,var(--muted) 75%,transparent)}
+#eform input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.ebtn{margin-top:12px;min-height:44px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink,#FFFFFF);font-weight:650;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px}
+.ebtn:hover:not(:disabled){filter:brightness(1.08)}
+.ebtn:disabled{opacity:.7;cursor:default}
+.ebtn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.ebtn .spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.4);border-top-color:#FFFFFF;animation:spin .8s linear infinite}
+.lg-links{display:flex;justify-content:space-between;gap:6px 12px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--muted)}
+.lg-links .lk{color:var(--accent);font-weight:600;text-decoration:none}
+.lg-links .lk:hover{text-decoration:underline}
+.login .err.ok{color:var(--accent)}
+.lg-legal{margin:22px 0 0;font-size:12px;color:var(--muted);line-height:1.55}
+.lg-foot .lk{color:var(--muted);text-decoration:none}
+.lg-foot .lk:hover{color:var(--ink);text-decoration:underline}
+.lg-foot .sep{width:100%;height:0}
+.legal{display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.55;max-height:60vh;overflow-y:auto}
+.legal h3{font-size:15px;margin:6px 0 -6px}
+.legal p,.legal ul{margin:0;color:var(--ink)}
+.legal ul{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.legal small{color:var(--muted)}
+.loff{display:flex;align-items:center;gap:8px;margin:0 0 18px;background:color-mix(in srgb,var(--sun) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--sun) 40%,transparent);color:var(--ink);border-radius:8px;padding:8px 11px;font-size:13px;font-weight:600}
 .loff svg{flex:none;color:var(--sun)}
-.login-card .err{margin:4px 0 0;font-size:13.5px;color:var(--danger);font-weight:600;max-width:none}
-.trust b{color:var(--ink);font-weight:650}
-.daymock{background:rgba(245,247,245,.05);border:1px solid rgba(245,247,245,.1);border-radius:18px;padding:18px 18px 8px;display:flex;flex-direction:column;gap:14px;max-width:520px}
-.daymock-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;color:#A3ACB9}
-.daymock-top b{color:#F5F7F5;font-size:14.5px}
-.daymock-top .mono{font-family:var(--f-mono);font-size:12px}
-.dm-bar{display:flex;flex-direction:column;gap:6px;padding-inline:4px}
-.dm-track{position:relative;height:10px;border-radius:999px;background:rgba(245,247,245,.08)}
-.dm-b{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--cc);box-shadow:0 0 0 2px var(--side-bg)}
-.dm-now{position:absolute;top:-7px;bottom:-7px;width:2px;margin-left:-1px;background:var(--sun);border-radius:2px;animation:fadeIn .4s 1.2s both}
-.dm-now::before{content:"";position:absolute;top:-5px;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 4px color-mix(in srgb,var(--sun) 28%,transparent)}
-.dm-scale{position:relative;height:14px;font-size:11px;color:#7F8A99;font-family:var(--f-mono)}
-.dm-scale span{position:absolute;top:0;transform:translateX(-50%)}
-.dm-scale span:first-child{transform:none}.dm-scale span:last-child{transform:translateX(-100%)}
-.dm-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.dm-list li{display:grid;grid-template-columns:44px 10px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 8px;margin-inline:-8px;border-top:1px solid rgba(245,247,245,.07);font-size:14px;border-radius:10px;animation:riseIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k) * 110ms + 900ms)}
-.dm-list li:first-child{border-top-color:transparent}
-.dm-list .t{font-family:var(--f-mono);font-size:12px;color:#A3ACB9}
-.dm-list i{width:10px;height:10px;border-radius:50%;background:var(--cc)}
-.dm-list b{color:#F5F7F5;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dm-list em{font-style:normal;font-size:12px;color:#A3ACB9;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
-.dm-list li.done b{color:#8E99A7;text-decoration:line-through}
-.dm-list li.done em{color:var(--side-accent)}
-.dm-list li.now{background:color-mix(in srgb,var(--sun) 12%,transparent);border-top-color:transparent}
-.dm-list li.now + li{border-top-color:transparent}
-.dm-list li.now em{color:var(--sun);font-weight:700}
-.feats{display:flex;flex-direction:column;gap:14px;max-width:560px}
-.feats{border-top:1px solid rgba(245,247,245,.08)}
-.feat{display:grid;grid-template-columns:200px minmax(0,1fr);gap:18px;align-items:center;padding-top:14px}
-.fx{justify-self:start;display:inline-flex;align-items:center;gap:8px;font-size:12px;color:#C9D1DB;white-space:nowrap}
-.fx .m{font-family:var(--f-mono);font-size:11px;color:#7F8A99}
-.fx-toast{background:#F5F7F5;color:#1F2937;border-radius:10px;padding:7px 10px;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:rotate(-1.5deg)}
-.fx-toast b{font-weight:700}
-.fx-toast i{width:8px;height:8px;border-radius:50%;background:var(--sun);flex:none}
-.fx-toast .m{color:#5D6776}
-.fx-sync{font-family:var(--f-mono);font-size:11.5px;color:var(--side-accent);border:1px dashed rgba(95,211,182,.4);border-radius:8px;padding:6px 10px}
-.fx-sync i{width:7px;height:7px;border-radius:50%;background:var(--side-accent);box-shadow:0 0 0 3px rgba(95,211,182,.18)}
-.fx-spark{gap:10px}
-.fx-spark .m{color:var(--side-accent);font-weight:600}
-.feat div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.feat b{color:#F5F7F5;font-size:15px;font-weight:650}
-.feat div span{font-size:13.5px;color:#A3ACB9;line-height:1.4}
-.login-card{background:var(--surface);color:var(--ink);border-radius:24px;padding:40px 32px 28px;width:100%;max-width:420px;justify-self:end;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
-.login-card h2{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-top:6px}
-.login-card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.5;max-width:30ch}
-.ring-anim .seg{transform-origin:50px 50px;animation:ringIn 1.1s cubic-bezier(.2,.8,.2,1) both}
-.ring-anim .sun{transform-origin:79.3px 32.8px;animation:sunIn .6s .7s cubic-bezier(.3,1.6,.5,1) both,sunGlow 3s 1.4s ease-in-out infinite}
+.lg-foot{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;padding:14px max(22px, env(safe-area-inset-right, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px));font-size:12.5px;color:var(--muted)}
+.lg-foot span{display:inline-flex;align-items:center;gap:6px}
+.lg-foot span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.ring-anim .seg{transform-origin:50px 50px;animation:ringIn 1s cubic-bezier(.2,.8,.2,1) both}
+.ring-anim .sun{transform-origin:79.3px 32.8px;animation:sunIn .5s .6s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes ringIn{from{transform:rotate(-140deg);opacity:0}to{transform:none;opacity:1}}
 @keyframes sunIn{from{transform:scale(0)}to{transform:scale(1)}}
-@keyframes sunGlow{0%,100%{filter:none}50%{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--sun) 70%,transparent))}}
-@media (prefers-reduced-motion: reduce){.ring-anim .seg,.ring-anim .sun,.dm-list li,.dm-b,.dm-now,.lh > *,.login-card,.gbtn .spin{animation:none}.gbtn{transition:none}}
-.gbtn{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:14px 16px;font-weight:650;font-size:15.5px;transition:border-color .15s,box-shadow .15s,transform .15s}
-.gbtn:hover:not(:disabled){border-color:var(--ink);box-shadow:0 6px 18px rgba(31,41,55,.12);transform:translateY(-1px)}
-.gbtn:disabled{opacity:.6;cursor:default}
-.trust{width:100%;display:flex;flex-direction:column;gap:9px;margin-top:14px;padding-top:16px;border-top:1px solid var(--line);text-align:left}
-.trust span{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.4}
-.trust svg{flex:none;color:var(--accent);margin-top:1px}
-.login-foot{font-size:12px;color:var(--muted);margin-top:8px}
-.login-foot b{color:var(--ink)}
-@media (max-width: 880px){
-  .login-wrap{grid-template-columns:minmax(0,1fr);gap:28px;padding-block:28px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
-  .login-card{justify-self:stretch;max-width:none;padding:32px 22px 24px}
-  .lh{align-items:center;text-align:center}
-  .lh p.lead{font-size:15.5px}
-  .daymock{display:none}
-  .feats{gap:10px;max-width:none;width:100%;text-align:left}
-  .feat{grid-template-columns:minmax(0,1fr) auto;gap:12px}
-  .feat .fx{order:2;justify-self:end}
-  .feat div span{display:none}
-  .fx-toast span:not(.m){display:none}
-  .login-deco{width:440px;height:440px;right:-200px;top:-180px}
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.lg-col,.ring-anim .seg,.ring-anim .sun,.gbtn .spin{animation:none}.gbtn{transition:none}}
+
+/* ---- layout estilo landing: texto à esquerda, prévia do app à direita ---- */
+.login{background:var(--bg)}
+.bx{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);min-height:100%}
+.bx-left{display:flex;flex-direction:column;justify-content:center;gap:22px;padding:40px 4vw 40px max(28px, 7vw, env(safe-area-inset-left, 0px));min-width:0;animation:riseIn .6s cubic-bezier(.2,.8,.2,1) both}
+.bx-logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:30px;letter-spacing:-.025em;color:var(--accent)}
+.bx-nav{position:absolute;top:calc(18px + env(safe-area-inset-top, 0px));right:max(22px, env(safe-area-inset-right, 0px));z-index:3;display:flex;gap:18px;font-size:14px;font-weight:500}
+.bx-nav .lk{text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+.bx-nav .lk:hover{background:var(--surface)}
+.bx-h1{margin:6px 0 0;font-family:var(--f-body);font-weight:300;text-transform:uppercase;font-size:clamp(40px,5.4vw,78px);line-height:1.04;letter-spacing:.01em;color:var(--ink)}
+.bx-h1 em{font-style:normal;color:var(--accent)}
+.bx-lead{margin:0;font-size:clamp(17px,1.5vw,21px);line-height:1.45;color:var(--ink);max-width:30ch}
+.login .gbtn{align-self:flex-start;width:auto;min-height:58px;border:0;border-radius:999px;background:var(--accent);color:var(--accent-ink,#FFFFFF);padding:8px 30px 8px 9px;gap:14px;font-size:18px;font-weight:650;box-shadow:0 8px 24px color-mix(in srgb,var(--accent) 35%,transparent)}
+.login .gbtn:hover:not(:disabled){background:var(--accent);filter:brightness(1.07);transform:translateY(-1px)}
+.login .gbtn svg{width:42px;height:42px;padding:10px;background:#FFFFFF;border-radius:50%;box-sizing:border-box;flex:none}
+.login .gbtn .spin{border-color:rgba(255,255,255,.4);border-top-color:#FFFFFF}
+.bx-etoggle{align-self:flex-start;color:var(--muted);font-size:14px;margin-top:-6px}
+.bx-etoggle:hover{color:var(--ink)}
+#ebox{max-width:360px;display:flex;flex-direction:column}
+#ebox[hidden]{display:none}
+.bx-left .lg-legal{margin:0;max-width:44ch}
+.bx-right{position:relative;overflow:hidden;min-height:560px}
+.bx-arch{position:absolute;top:-2px;bottom:6%;left:8%;right:5%;border-radius:0 0 999px 999px;background:linear-gradient(170deg,#D7F1E8 0%,#8FD6C1 48%,#2E9E83 100%)}
+.mk-desk{position:absolute;right:4%;top:15%;width:82%;aspect-ratio:16/10.4;background:#FFFFFF;border-radius:14px;box-shadow:0 30px 60px rgba(14,60,50,.28),0 0 0 6px rgba(255,255,255,.45);overflow:hidden;display:grid;grid-template-columns:19% 1fr;font-family:var(--f-body);color:#1F2937;animation:riseIn .8s .15s cubic-bezier(.2,.8,.2,1) backwards}
+.mk-side{background:#1F2937;padding:9% 8%;display:flex;flex-direction:column;gap:7%}
+.mk-side b{display:flex;align-items:center;gap:4px;color:#F5F7F5;font-family:var(--f-display);font-size:clamp(7px,.8vw,11px)}
+.mk-side b i{width:9px;height:9px;border-radius:50%;border:2px solid #5FD3B6;border-right-color:#F0B455}
+.mk-side span{height:6px;border-radius:3px;background:rgba(245,247,245,.18)}
+.mk-side span.on{background:#0E7A65}
+.mk-main{padding:3.5% 4%;display:flex;flex-direction:column;gap:4%;background:#F5F7F5;min-width:0}
+.mk-top{display:flex;justify-content:space-between;align-items:center;font-size:clamp(7px,.75vw,10px);color:#5D6776}
+.mk-top strong{font-family:var(--f-display);font-size:clamp(10px,1.2vw,16px);color:#1F2937}
+.mk-top em{font-style:normal;background:#E19A2B;color:#1F2937;border-radius:999px;padding:2px 7px;font-weight:700}
+.mk-line{position:relative;height:9%;min-height:10px;background:#E4E9E6;border-radius:6px;overflow:hidden}
+.mk-line i{position:absolute;top:22%;bottom:22%;border-radius:4px;background:var(--c)}
+.mk-line u{position:absolute;top:0;bottom:0;width:2px;background:#E19A2B;left:50%}
+.mk-cols{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4%}
+.mk-col{background:#FFFFFF;border-radius:7px;padding:6%;display:flex;flex-direction:column;gap:6%;font-size:clamp(6px,.68vw,9.5px);min-width:0}
+.mk-col h6{margin:0;font-size:clamp(7px,.75vw,10px);font-weight:700;color:#1F2937}
+.mk-card{border:1px solid #E4E9E6;border-radius:5px;padding:5% 6%;display:flex;flex-direction:column;gap:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-card s{text-decoration:none;align-self:flex-start;border-radius:999px;padding:0 5px;font-size:.85em;font-weight:700;background:color-mix(in srgb,var(--c) 18%,#FFFFFF);color:#1F2937}
+.mk-card.done{color:#8E99A7;text-decoration:line-through}
+.mk-phone{position:absolute;left:5%;bottom:9%;width:25%;aspect-ratio:9/18.5;background:#FFFFFF;border-radius:20px;border:5px solid #FFFFFF;box-shadow:0 24px 48px rgba(14,60,50,.32),0 0 0 1px rgba(14,60,50,.08);overflow:hidden;display:flex;flex-direction:column;font-family:var(--f-body);color:#1F2937;animation:riseIn .8s .3s cubic-bezier(.2,.8,.2,1) backwards}
+.mk-phone header{background:#1F2937;color:#F5F7F5;padding:12% 9% 8%;font-family:var(--f-display);font-size:clamp(8px,.9vw,12px)}
+.mk-phone header small{display:block;font-family:var(--f-body);font-size:.75em;color:#A3ACB9;font-weight:400}
+.mk-phone ul{list-style:none;margin:0;padding:6% 7%;display:flex;flex-direction:column;gap:7px;font-size:clamp(6.5px,.7vw,9.5px);flex:1}
+.mk-phone li{display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden}
+.mk-phone li i{width:9px;height:9px;border-radius:3px;border:1.5px solid #CBD3CF;flex:none}
+.mk-phone li.done i{background:#0E7A65;border-color:#0E7A65}
+.mk-phone li.done{color:#8E99A7;text-decoration:line-through}
+.mk-phone li b{margin-left:auto;font-weight:600;color:#5D6776;font-family:var(--f-mono);font-size:.9em}
+.mk-fab{position:absolute;right:9%;bottom:4%;width:20%;aspect-ratio:1;border-radius:50%;background:#E19A2B;color:#1F2937;display:grid;place-items:center;font-weight:700;font-size:clamp(10px,1.1vw,15px)}
+@media (max-width: 900px){
+  .bx{grid-template-columns:minmax(0,1fr)}
+  .bx-right{display:none}
+  .bx-left{padding:84px max(22px, env(safe-area-inset-right, 0px)) 36px max(22px, env(safe-area-inset-left, 0px));gap:18px}
+  .bx-h1{font-size:clamp(34px,10vw,48px)}
+  .login .gbtn{align-self:stretch;justify-content:flex-start}
+  .bx-nav{left:max(22px, env(safe-area-inset-left, 0px));right:auto}
 }
+/* ---- animações ao passar o mouse ---- */
+.bx-right{perspective:1400px}
+.bx-arch{transition:filter .6s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.mk-desk,.mk-phone{transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s}
+.bx-right:hover .bx-arch{filter:saturate(1.2) brightness(1.03);transform:scale(1.025)}
+.bx-right:hover .mk-desk{transform:translate3d(var(--px,0px),var(--py,0px),0) translateY(-8px) rotateY(-5deg) rotateX(2deg);box-shadow:0 40px 80px rgba(14,60,50,.32),0 0 0 6px rgba(255,255,255,.55)}
+.bx-right:hover .mk-phone{transform:translate3d(calc(var(--px,0px) * -1.8),calc(var(--py,0px) * -1.8),0) translateY(-14px) rotate(-2.5deg);box-shadow:0 34px 60px rgba(14,60,50,.38),0 0 0 1px rgba(14,60,50,.08)}
+.mk-side span{transition:background .25s,transform .25s;transform-origin:left}
+.mk-side span:hover{background:#5FD3B6;transform:scaleX(1.08)}
+.mk-desk:hover .mk-side b i{animation:logoSpin 1.4s linear infinite}
+.mk-top em{transition:transform .25s cubic-bezier(.3,1.6,.5,1),box-shadow .25s}
+.mk-top em:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(225,154,43,.45)}
+.mk-line i{transition:filter .25s,transform .25s;transform-origin:center}
+.mk-line i:hover{filter:brightness(1.15);transform:scaleY(1.35)}
+.mk-desk:hover .mk-line u{animation:nowMove 3s ease-in-out infinite alternate}
+@keyframes nowMove{from{left:44%}to{left:60%}}
+.mk-col{transition:background .25s}
+.mk-col:hover{background:#FBFCFB}
+.mk-card{transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s,border-color .22s}
+.mk-card:hover{transform:translateY(-3px) scale(1.02);border-color:#0E7A65;box-shadow:0 6px 14px rgba(14,60,50,.14)}
+.mk-phone header{transition:background .3s}
+.mk-phone:hover header{background:#0E7A65}
+.mk-phone li{transition:color .2s,transform .2s;border-radius:4px}
+.mk-phone li i{transition:background .2s,border-color .2s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+.mk-phone li:hover{transform:translateX(3px)}
+.mk-phone li:not(.done):hover i{background:#0E7A65;border-color:#0E7A65;transform:scale(1.2)}
+.mk-phone li:not(.done):hover{color:#8E99A7;text-decoration:line-through}
+.mk-fab{transition:transform .35s cubic-bezier(.3,1.6,.5,1),box-shadow .35s}
+.mk-fab:hover{transform:rotate(90deg) scale(1.15);box-shadow:0 6px 16px rgba(225,154,43,.5)}
+.mk-phone:hover .mk-fab{animation:fabPulse 1.6s ease-in-out infinite}
+@keyframes fabPulse{0%,100%{box-shadow:0 0 0 0 rgba(225,154,43,.45)}50%{box-shadow:0 0 0 8px rgba(225,154,43,0)}}
+/* logo */
+.bx-logo{cursor:default;width:max-content}
+.bx-logo span{display:inline-block;transition:transform .3s cubic-bezier(.3,1.6,.5,1),color .3s}
+.bx-logo:hover span{transform:translateY(-2px)}
+.bx-logo:hover span:nth-child(2){transition-delay:.04s}.bx-logo:hover span:nth-child(3){transition-delay:.08s}.bx-logo:hover span:nth-child(4){transition-delay:.12s}.bx-logo:hover span:nth-child(5){transition-delay:.16s}.bx-logo:hover span:nth-child(6){transition-delay:.2s}
+.bx-logo:hover .seg{animation:logoSpin .9s cubic-bezier(.3,1.3,.5,1)}
+.bx-logo:hover .sun{animation:sunHop .9s ease}
+@keyframes logoSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes sunHop{0%{transform:scale(1)}35%{transform:scale(1.45)}65%{transform:scale(.9)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.bx-left,.mk-desk,.mk-phone{animation:none}.login .gbtn{transition:none}
+  .bx-right *,.bx-logo *{animation:none!important;transition:none!important}
+  .bx-right:hover .mk-desk,.bx-right:hover .mk-phone,.bx-right:hover .bx-arch{transform:none}}
 .who{display:flex;gap:10px;align-items:center;min-width:0}
 .who img,.who .av{width:34px;height:34px;border-radius:50%;flex:none;background:var(--side-active);color:#FFFFFF;display:grid;place-items:center;font-weight:700;object-fit:cover}
 .who div{min-width:0;display:flex;flex-direction:column}
@@ -451,8 +534,8 @@ body.dragging{user-select:none;-webkit-user-select:none;cursor:grabbing}
 <div class="app">
   <aside>
     <div class="brand">
-      <svg width="36" height="36" viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(-88 50 50)" fill="none" stroke-width="12" stroke-linecap="round"><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="0" style="stroke:var(--side-accent)"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-25" style="stroke:color-mix(in srgb,var(--side-ink) 22%,var(--side-bg))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-50" style="stroke:color-mix(in srgb,var(--side-ink) 22%,var(--side-bg))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-75" style="stroke:color-mix(in srgb,var(--side-ink) 22%,var(--side-bg))"/></g><circle cx="79.3" cy="32.8" r="10" stroke-width="4" style="fill:var(--sun);stroke:var(--side-bg)"/></svg>
-      <div><b>ritmo</b><small>Sua rotina, no seu tempo</small></div>
+      <svg width="36" height="36" viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(-88 50 50)" fill="none" stroke-width="12" stroke-linecap="round"><g class="seg"><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="0" style="stroke:var(--side-accent)"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-25" style="stroke:color-mix(in srgb,var(--side-ink) 22%,var(--side-bg))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-50" style="stroke:color-mix(in srgb,var(--side-ink) 22%,var(--side-bg))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-75" style="stroke:color-mix(in srgb,var(--side-ink) 22%,var(--side-bg))"/></g></g><circle class="sun" cx="79.3" cy="32.8" r="10" stroke-width="4" style="fill:var(--sun);stroke:var(--side-bg)"/></svg>
+      <div><b><span>r</span><span>i</span><span>t</span><span>m</span><span>o</span></b><small>Sua rotina, no seu tempo</small></div>
     </div>
     <nav id="nav" aria-label="Seções"></nav>
     <div class="store" id="acct" hidden></div>
@@ -462,42 +545,50 @@ body.dragging{user-select:none;-webkit-user-select:none;cursor:grabbing}
 
 
 <div class="login" id="login" hidden>
-  <svg class="login-deco" viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(-60 50 50)" fill="none" stroke-linecap="round"><circle cx="50" cy="50" r="44" pathLength="100" stroke-dasharray="22 78" stroke-width="3" style="stroke:var(--side-accent);opacity:.35"/><circle cx="50" cy="50" r="44" pathLength="100" stroke-dasharray="22 78" stroke-dashoffset="-25" stroke-width="3" style="stroke:rgba(245,247,245,.12)"/><circle cx="50" cy="50" r="44" pathLength="100" stroke-dasharray="22 78" stroke-dashoffset="-50" stroke-width="3" style="stroke:rgba(245,247,245,.12)"/><circle cx="50" cy="50" r="44" pathLength="100" stroke-dasharray="22 78" stroke-dashoffset="-75" stroke-width="3" style="stroke:rgba(245,247,245,.12)"/><circle cx="50" cy="50" r="32" stroke-width=".6" style="stroke:rgba(245,247,245,.08)"/></g></svg><svg class="login-deco2" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="none" stroke-width="2.5" pathLength="100" stroke-dasharray="30 70" stroke-linecap="round" style="stroke:var(--sun);opacity:.4"/></svg>
-  <div class="login-wrap">
-    <section class="lh">
-      <div class="lh-brand"><svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true" class=""><g transform="rotate(-88 50 50)" fill="none" stroke-width="12" stroke-linecap="round"><g class="seg"><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" style="stroke:var(--accent)"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-25" style="stroke:color-mix(in srgb,#F5F7F5 22%,var(--side-bg))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-50" style="stroke:color-mix(in srgb,#F5F7F5 22%,var(--side-bg))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-75" style="stroke:color-mix(in srgb,#F5F7F5 22%,var(--side-bg))"/></g></g><circle class="sun" cx="79.3" cy="32.8" r="10" stroke-width="4" style="fill:var(--sun);stroke:var(--side-bg)"/></svg>ritmo</div>
-      <h1>Organize o dia.<br>Mantenha o <em>ritmo</em>.</h1>
-      <p class="lead">Tarefas, rotina, hábitos e metas num só lugar, com avisos na hora certa e tudo salvo na sua conta.</p>
-      <div class="daymock" aria-hidden="true">
-        <div class="daymock-top"><b>Um dia no Ritmo</b><span class="mono">sexta · 15:00</span></div>
-        <div class="dm-bar"><div class="dm-track"><span class="dm-b" style="--i:0;--cc:var(--c-trabalho);left:11.1%;width:22.2%"></span><span class="dm-b" style="--i:1;--cc:var(--c-pessoal);left:33.3%;width:5.6%"></span><span class="dm-b" style="--i:2;--cc:var(--c-trabalho);left:38.9%;width:22.2%"></span><span class="dm-b" style="--i:3;--cc:var(--c-saude);left:63.9%;width:5.5%"></span><span class="dm-b" style="--i:4;--cc:var(--c-estudo);left:72.2%;width:16.7%"></span><span class="dm-now" style="left:50%"></span></div>
-        <div class="dm-scale"><span style="left:0%">06h</span><span style="left:16.67%">09h</span><span style="left:33.33%">12h</span><span style="left:50%">15h</span><span style="left:66.67%">18h</span><span style="left:83.33%">21h</span><span style="left:100%">24h</span></div></div>
-        <ul class="dm-list">
-          <li class="done" style="--k:0"><span class="t">12:00</span><i style="--cc:var(--c-pessoal)"></i><b>Almoço</b><em>feito</em></li>
-          <li class="now" style="--k:1"><span class="t">13:00</span><i style="--cc:var(--c-trabalho)"></i><b>Trabalho</b><em>agora</em></li>
-          <li class="" style="--k:2"><span class="t">17:30</span><i style="--cc:var(--c-saude)"></i><b>Academia</b><em><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> aviso 15 min antes</em></li>
-          <li class="" style="--k:3"><span class="t">19:00</span><i style="--cc:var(--c-estudo)"></i><b>Aula</b><em>em seguida</em></li>
-        </ul>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300&amp;display=swap">
+  <nav class="bx-nav"><button class="lk" id="linst" type="button" hidden>Instalar o app</button><button class="lk" type="button" data-legal="ajuda">Ajuda</button></nav>
+  <div class="bx">
+    <section class="bx-left">
+      <div class="bx-logo" title="ritmo"><svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true" class="ring-anim"><g transform="rotate(-88 50 50)" fill="none" stroke-width="13" stroke-linecap="round"><g class="seg"><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" style="stroke:var(--accent)"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-25" style="stroke:color-mix(in srgb,var(--accent) 22%,var(--surface))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-50" style="stroke:color-mix(in srgb,var(--accent) 22%,var(--surface))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-75" style="stroke:color-mix(in srgb,var(--accent) 22%,var(--surface))"/></g></g><circle class="sun" cx="79.3" cy="32.8" r="11" stroke-width="4" style="fill:var(--sun);stroke:var(--surface)"/></svg><span>r</span><span>i</span><span>t</span><span>m</span><span>o</span></div>
+      <div class="loff" id="loff" role="status" hidden><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19h.01M3 3l18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Você está sem internet. Conecte-se para entrar.</div>
+      <h1 class="bx-h1">Planejamento<br>de rotina<br><em>gratuito</em></h1>
+      <p class="bx-lead">Organize tarefas, rotina, hábitos e metas em um só lugar, com avisos na hora certa e tudo salvo na sua conta.</p>
+      <button class="gbtn" id="gbtn" disabled>Carregando…</button>
+      <button class="lk bx-etoggle" id="etoggle" type="button" aria-expanded="false" aria-controls="ebox">Prefere entrar com e-mail?</button>
+      <div id="ebox" hidden>
+        <form id="eform" novalidate>
+        <label for="email">E-mail</label>
+        <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="Digite seu e-mail…">
+        <label for="epass">Senha</label>
+        <input id="epass" type="password" autocomplete="current-password" placeholder="Pelo menos 6 caracteres">
+        <button class="ebtn" id="ebtn" type="submit">Continuar com e-mail</button>
+      </form>
+      <div class="lg-links"><span id="emode">Não tem conta? <button class="lk" type="button" data-emode="criar">Criar conta</button></span><button class="lk" type="button" id="eforgot">Esqueceu a senha?</button></div>
+      <div class="lg-links"><span id="emode">Não tem conta? <button class="lk" type="button" data-emode="criar">Criar conta</button></span><button class="lk" type="button" id="eforgot">Esqueceu a senha?</button></div>
       </div>
-      <div class="feats">
-        <div class="feat"><span class="fx fx-toast" aria-hidden="true"><i></i><span><b>Academia</b> em 15 min</span><span class="m">17:15</span></span><div><b>Avisos na hora certa</b><span>Lembretes antes e no horário exato de cada tarefa.</span></div></div>
-        <div class="feat"><span class="fx fx-sync" aria-hidden="true"><i></i>salvo · celular e PC</span><div><b>Sincroniza em todos os aparelhos</b><span>Celular e computador sempre com as mesmas informações.</span></div></div>
-        <div class="feat"><span class="fx fx-spark" aria-hidden="true"><svg width="60" height="24" viewBox="0 0 60 24"><rect x="0" y="15" width="6" height="9" rx="1.5" style="fill:rgba(95,211,182,.4)"/><rect x="9" y="9" width="6" height="15" rx="1.5" style="fill:rgba(95,211,182,.4)"/><rect x="18" y="18" width="6" height="6" rx="1.5" style="fill:rgba(95,211,182,.4)"/><rect x="27" y="6" width="6" height="18" rx="1.5" style="fill:rgba(95,211,182,.4)"/><rect x="36" y="12" width="6" height="12" rx="1.5" style="fill:rgba(95,211,182,.4)"/><rect x="45" y="3" width="6" height="21" rx="1.5" style="fill:rgba(95,211,182,.4)"/><rect x="54" y="9" width="6" height="15" rx="1.5" style="fill:var(--side-accent)"/></svg><span class="m">+32%</span></span><div><b>Progresso visível</b><span>Estatísticas da semana e constância dos hábitos.</span></div></div>
+      <p class="err" id="lerr" role="alert" aria-live="assertive" hidden></p>
+      <p class="lg-legal">Ao continuar, você concorda com os <button class="lk" type="button" data-legal="termos">Termos de uso</button> e a <button class="lk" type="button" data-legal="privacidade">Política de privacidade</button> do Ritmo.</p>
+    </section>
+    <section class="bx-right" aria-hidden="true">
+      <div class="bx-arch"></div>
+      <div class="mk-desk">
+        <div class="mk-side"><b><i></i>ritmo</b><span class="on"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="mk-main">
+          <div class="mk-top"><strong>Boa tarde</strong><em>+ Nova tarefa</em></div>
+          <div class="mk-line"><i style="--c:var(--c-trabalho);left:11%;width:21%"></i><i style="--c:var(--c-pessoal);left:33.5%;width:5%"></i><i style="--c:var(--c-trabalho);left:39%;width:21%"></i><i style="--c:var(--c-saude);left:64%;width:5%"></i><i style="--c:var(--c-estudo);left:72%;width:16%"></i><u></u></div>
+          <div class="mk-cols">
+            <div class="mk-col"><h6>Para hoje</h6><div class="mk-card done">Responder e-mails</div><div class="mk-card" style="--c:var(--c-casa)">Pagar conta de luz<s>Casa</s></div><div class="mk-card" style="--c:var(--c-estudo)">Revisar para a prova<s>Estudo</s></div></div>
+            <div class="mk-col"><h6>Hábitos</h6><div class="mk-card done">Beber 2 L de água</div><div class="mk-card">Ler 20 minutos</div><div class="mk-card done">Exercício físico</div></div>
+            <div class="mk-col"><h6>Metas</h6><div class="mk-card" style="--c:var(--c-saude)">Correr 100 km<s>42%</s></div><div class="mk-card" style="--c:var(--c-estudo)">Curso de inglês<s>45%</s></div><div class="mk-card" style="--c:var(--c-pessoal)">Ler 12 livros<s>67%</s></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="mk-phone">
+        <header>Hoje<small>sexta, 16 de outubro</small></header>
+        <ul><li class="done"><i></i>Café e planejar o dia<b>07:00</b></li><li class="done"><i></i>Trabalho<b>08:00</b></li><li><i></i>Pagar conta de luz<b>10:00</b></li><li><i></i>Academia<b>17:30</b></li><li><i></i>Aula na faculdade<b>19:00</b></li><li><i></i>Revisar matéria<b>22:00</b></li></ul>
+        <span class="mk-fab">+</span>
       </div>
     </section>
-    <div class="login-card">
-      <div class="loff" id="loff" role="status" hidden><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19h.01M3 3l18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Você está sem internet. Conecte-se para entrar.</div>
-      <svg width="92" height="92" viewBox="0 0 100 100" aria-hidden="true" class="ring-anim"><g transform="rotate(-88 50 50)" fill="none" stroke-width="12" stroke-linecap="round"><g class="seg"><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" style="stroke:var(--accent)"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-25" style="stroke:color-mix(in srgb,var(--accent) 22%,var(--surface))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-50" style="stroke:color-mix(in srgb,var(--accent) 22%,var(--surface))"/><circle cx="50" cy="50" r="34" pathLength="100" stroke-dasharray="16 84" stroke-dashoffset="-75" style="stroke:color-mix(in srgb,var(--accent) 22%,var(--surface))"/></g></g><circle class="sun" cx="79.3" cy="32.8" r="10" stroke-width="4" style="fill:var(--sun);stroke:var(--surface)"/></svg>
-      <h2>Entrar no ritmo</h2>
-      <p>Use sua conta Google para salvar tudo e acessar de qualquer aparelho.</p>
-      <button class="gbtn" id="gbtn" disabled>Carregando…</button>
-      <p class="err" id="lerr" role="alert" aria-live="assertive" hidden></p>
-      <div class="trust">
-        <span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h12v10H6zM8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Só você vê seus dados.</b> O Ritmo nunca recebe sua senha.</span>
-        <span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Funciona sem internet</b> e sincroniza quando a conexão voltar.</span>
-      </div>
-      <div class="login-foot"><b>Grátis</b> · instale na tela inicial</div>
-    </div>
   </div>
 </div>
 <dialog id="dlg"></dialog>
@@ -603,7 +694,7 @@ function taskRow(t,showDate=true,draggable=false){
   const subHtml=subs.length&&open?`<div class="subs">${subs.map(x=>`<button class="stp ${x.done?'done':''}" data-sub="${t.id}:${x.id}" aria-label="Etapa: ${esc(x.text)}"><span class="check" aria-pressed="${x.done}">${svg('check')}</span><span>${esc(x.text)}</span></button>`).join('')}</div>`:'';
   return `<div class="item ${t.done?'done':''}"><button class="check" aria-pressed="${t.done}" aria-label="Concluir ${esc(t.title)}" data-toggle="${t.id}">${svg('check')}</button>
   <div><div class="t">${esc(t.title)}</div><div class="meta">${meta.join('')}</div>${subHtml}</div>
-  <div class="rowacts">${draggable?`<span class="iconbtn grip" data-drag="${t.id}" title="Arraste para outro dia do calendário" aria-hidden="true">${svg('grip')}</span>`:''}<button class="iconbtn" data-edit="task:${t.id}" aria-label="Editar">${svg('edit')}</button></div></div>`;
+  <div class="rowacts">${t.date&&t.time&&!t.done?`<button class="iconbtn" data-cal-add="${t.id}" aria-label="Adicionar à agenda do aparelho" title="Adicionar à agenda">${svg('calendario',16)}</button>`:''}${draggable?`<span class="iconbtn grip" data-drag="${t.id}" title="Arraste para outro dia do calendário" aria-hidden="true">${svg('grip')}</span>`:''}<button class="iconbtn" data-edit="task:${t.id}" aria-label="Editar">${svg('edit')}</button></div></div>`;
 }
 const sortTasks=a=>a.sort((x,y)=>(x.date||'9999').localeCompare(y.date||'9999')||(PRANK[x.priority||'']-PRANK[y.priority||''])||(x.time||'99').localeCompare(y.time||'99'));
 function blocksFor(dow){return S.blocks.filter(b=>b.days.includes(dow)).sort((a,b)=>a.start.localeCompare(b.start))}
@@ -841,6 +932,7 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('button,[data-close]');if(!b)return;
   const d=b.dataset;
   if('close' in d){document.getElementById('dlg').close();return}
+  if(d.calAdd){openCalAdd(d.calAdd);return}
   if('subAdd' in d){const box=document.getElementById('subs');box.insertAdjacentHTML('beforeend',subRow());box.lastElementChild.querySelector('input').focus();return}
   if('subDel' in d){b.closest('.subrow').remove();return}
   if(d.subopen){closedSubs.has(d.subopen)?closedSubs.delete(d.subopen):closedSubs.add(d.subopen);render();return}
@@ -874,7 +966,7 @@ setInterval(()=>{if(view==='painel'&&!document.getElementById('dlg').open)render
 let drag=null,justDragged=false;
 document.addEventListener('pointerdown',e=>{const h=e.target.closest('[data-drag]');if(!h||e.button>0)return;drag={id:h.dataset.drag,x:e.clientX,y:e.clientY,on:false,over:null}});
 document.addEventListener('pointermove',e=>{if(!drag)return;
-  if(!drag.on){if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<6)return;drag.on=true;const t=S.tasks.find(x=>x.id===drag.id);const g=document.createElement('div');g.className='ghost';g.textContent=t?t.title:'';document.body.appendChild(g);drag.g=g;document.body.classList.add('dragging')}
+  if(!drag.on){if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<6)return;drag.on=true;const t=S.tasks.find(x=>x.id===drag.id);const g=document.createElement('div');g.className='dragghost';g.textContent=t?t.title:'';document.body.appendChild(g);drag.g=g;document.body.classList.add('dragging')}
   e.preventDefault();drag.g.style.left=e.clientX+'px';drag.g.style.top=e.clientY+'px';
   const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest('[data-day-sel]');
   if(drag.over!==c){drag.over&&drag.over.classList.remove('dropover');c&&c.classList.add('dropover');drag.over=c}},{passive:false});
@@ -886,6 +978,41 @@ function endDrag(cancel){if(!drag)return;const d=drag;drag=null;if(!d.on)return;
 document.addEventListener('pointerup',()=>endDrag(false));
 document.addEventListener('pointercancel',()=>endDrag(true));
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target&&e.target.name==='sub'){e.preventDefault();const a=document.querySelector('[data-sub-add]');a&&a.click()}});
+
+/* ---------- adicionar à agenda do aparelho ---------- */
+function icsEsc(x){return String(x||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;')}
+function icsFold(l){const o=[];while(l.length>73){o.push(l.slice(0,73));l=' '+l.slice(73)}o.push(l);return o.join('\r\n')}
+function utcStamp(d){return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z'}
+function localStamp(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'T'+pad(d.getHours())+pad(d.getMinutes())+'00'}
+function calTimes(t){const st=new Date(dueOf(t));return [st,new Date(st.getTime()+30*60000)]}
+function calDesc(t){return ['Tarefa do Ritmo · '+(CATS[t.cat]||'Pessoal')].concat((t.subtasks||[]).map(x=>(x.done?'✓ ':'• ')+x.text)).join('\n')}
+function calAlarms(t){const a=[];if(t.remind>0)a.push(t.remind);if(t.atTime!==false||!a.length)a.push(0);return a}
+function taskIcs(t){const[st,en]=calTimes(t);
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Ritmo//Planejador de rotina//PT-BR','CALSCALE:GREGORIAN','METHOD:PUBLISH','BEGIN:VEVENT',
+    'UID:'+t.id+'-'+t.date.replace(/-/g,'')+'@ritmo','DTSTAMP:'+utcStamp(new Date()),'DTSTART:'+localStamp(st),'DTEND:'+localStamp(en),
+    'SUMMARY:'+icsEsc(t.title),'DESCRIPTION:'+icsEsc(calDesc(t))];
+  calAlarms(t).forEach(m=>L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(m?`${t.title} em ${m} min`:`Está na hora: ${t.title}`),'TRIGGER:'+(m?`-PT${m}M`:'PT0M'),'END:VALARM'));
+  L.push('END:VEVENT','END:VCALENDAR');return L.map(icsFold).join('\r\n')+'\r\n'}
+function gcalUrl(t){const[st,en]=calTimes(t);return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(t.title)+'&dates='+localStamp(st)+'/'+localStamp(en)+'&details='+encodeURIComponent(calDesc(t))}
+function saveIcs(t){const ics=taskIcs(t);
+  const name=(t.title.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w]+/g,'-').replace(/^-|-$/g,'').toLowerCase()||'tarefa')+'.ics';
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(ios){location.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);return}
+  try{const url=URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
+    toast('Arquivo da agenda baixado. Toque nele para salvar o evento.')}catch(e){toast('Não consegui gerar o arquivo da agenda neste aparelho.')}}
+function openCalAdd(id){const t=S.tasks.find(x=>x.id===id);if(!t||!t.date||!t.time)return;
+  const al=calAlarms(t).map(m=>m?`${m} min antes`:'na hora exata').join(' e ');
+  const dlg=document.getElementById('dlg');
+  dlg.innerHTML=`<div class="mhead"><h2>Adicionar à agenda</h2><button class="iconbtn" data-close aria-label="Fechar">${svg('x')}</button></div>
+  <div class="mbody" style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:14px">
+    <div class="calpick"><b>${esc(t.title)}</b><span>${relDate(t.date)} às <span class="mono">${t.time}</span> · alarmes ${al}</span></div>
+    <p style="margin:0;font-size:14px;color:var(--muted)">Com o evento na agenda do aparelho, o aviso chega mesmo com o Ritmo fechado.</p>
+    <button class="btn primary" id="calIcs" style="justify-content:center;padding:11px">${svg('calendario',16)}Agenda do aparelho (com os alarmes)</button>
+    <a class="btn" href="${gcalUrl(t)}" target="_blank" rel="noopener" style="justify-content:center;padding:11px;text-decoration:none;color:var(--ink)">Abrir no Google Agenda</a>
+    <p class="hint" style="margin:0">No Google Agenda, o aviso segue o lembrete padrão da sua agenda. Se você mudar a tarefa depois, adicione de novo.</p>
+  </div>`;
+  dlg.showModal();
+  document.getElementById('calIcs').onclick=()=>{saveIcs(t);dlg.close()}}
 
 /* ---------- avisos ---------- */
 var alertsReady;
@@ -929,10 +1056,13 @@ let installEvt=null;
 const isStandalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 function canInstall(){return !isStandalone()&&(!!installEvt||isIOS)}
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;render()});
-window.addEventListener('appinstalled',()=>{installEvt=null;render();toast('Ritmo instalado')});
+function updInst(){const b=document.getElementById('linst');if(b)b.hidden=!canInstall()}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;render();updInst()});
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#linst'))doInstall()});
+setTimeout(updInst,0);
+window.addEventListener('appinstalled',()=>{installEvt=null;render();updInst();toast('Ritmo instalado')});
 async function doInstall(){
-  if(installEvt){installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;render();return}
+  if(installEvt){installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;render();updInst();return}
   const dlg=document.getElementById('dlg');
   dlg.innerHTML=`<div class="mhead"><h2>Instalar no iPhone</h2><button class="iconbtn" data-close aria-label="Fechar">${svg('x')}</button></div>
   <div class="mbody" style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px;font-size:15px">
@@ -941,7 +1071,17 @@ async function doInstall(){
   <p style="margin:0;color:var(--muted);font-size:13px">Para receber notificações no iPhone, abra o Ritmo pelo ícone da tela inicial e toque em “Ativar avisos”.</p>
   <div class="mfoot"><span class="spacer"></span><button class="btn primary" data-close>Entendi</button></div></div>`;
   dlg.showModal()}
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+/* atualização automática: procura versão nova ao abrir e ao voltar para o app */
+if('serviceWorker' in navigator){
+  let reloaded=false;const hadSW=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadSW||reloaded)return;reloaded=true;
+    if(document.getElementById('dlg').open)return;location.reload()});
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+    const check=()=>{if(navigator.onLine!==false)reg.update().catch(()=>{})};
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)check()});
+    setInterval(check,30*60000);
+  }).catch(()=>{}));
+}
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(()=>{})}catch(e){}
 
 /* ---------- conta Google e sincronização ---------- */
@@ -968,7 +1108,7 @@ function detach(){fbUnsub&&fbUnsub();fbUnsub=null;fbDoc=null}
 let online=navigator.onLine!==false;
 window.addEventListener('online',()=>{online=true;renderAcct()});window.addEventListener('offline',()=>{online=false;renderAcct()});
 function renderAcct(){const el=document.getElementById('acct');if(!el)return;if(!fbUser){el.hidden=true;el.innerHTML='';return}el.hidden=false;
-  const nm=fbUser.displayName||fbUser.email||'Sua conta';
+  const nm=fbUser.displayName||(fbUser.email||'Sua conta').split('@')[0];
   el.innerHTML=`<div class="who">${fbUser.photoURL?`<img src="${esc(fbUser.photoURL)}" alt="" referrerpolicy="no-referrer">`:`<span class="av">${esc(nm[0].toUpperCase())}</span>`}<div><b>${esc(nm)}</b><span>${esc(fbUser.email||'')}</span></div></div>
   <span class="sync ${online?'':'off'}">${svg(online?'check':'alert',12)}${online?'Sincronizado na sua conta':'Sem internet: sincroniza ao voltar'}</span>
   <button class="btn small" data-act="logout">Sair da conta</button>`}
@@ -976,18 +1116,62 @@ const G_ICON='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"
 function updOff(){const o=document.getElementById('loff');if(o)o.hidden=navigator.onLine!==false}
 window.addEventListener('online',updOff);window.addEventListener('offline',updOff);
 function showLogin(ready){const l=document.getElementById('login');l.hidden=false;updOff();const b=document.getElementById('gbtn');
-  if(ready){b.disabled=false;b.innerHTML=G_ICON+'Entrar com Google'}else{b.disabled=true;b.textContent='Carregando…'}}
-function loginErr(m){const e=document.getElementById('lerr');e.textContent=m;e.hidden=false}
+  if(ready){b.disabled=false;b.innerHTML=G_ICON+'Continuar com Google'}else{b.disabled=true;b.textContent='Carregando…'}}
+function loginErr(m){const e=document.getElementById('lerr');e.classList.remove('ok');e.textContent=m;e.hidden=false}
 async function login(){document.getElementById('lerr').hidden=true;const gb=document.getElementById('gbtn');gb.disabled=true;gb.innerHTML='<span class="spin" aria-hidden="true"></span>Entrando…';const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});
   try{await firebase.auth().signInWithPopup(p)}catch(e){
     if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/cancelled-popup-request','auth/web-storage-unsupported'].includes(e.code)){try{await firebase.auth().signInWithRedirect(p)}catch(x){loginErr('Não foi possível entrar ('+x.code+'). Tente de novo.')}}
     else if(e.code==='auth/unauthorized-domain')loginErr('Este endereço ainda não foi autorizado no Firebase. Adicione o domínio em Authentication › Settings › Domínios autorizados.');
     else if(e.code!=='auth/popup-closed-by-user')loginErr('Não foi possível entrar. Verifique a internet e tente de novo.');
     if(!firebase.auth().currentUser)showLogin(true)}}
+let emailMode='entrar';
+function setEmailMode(m){emailMode=m;document.getElementById('ebtn').textContent=m==='criar'?'Criar conta':'Continuar com e-mail';
+  document.getElementById('emode').innerHTML=m==='criar'?'Já tem conta? <button class="lk" type="button" data-emode="entrar">Entrar</button>':'Não tem conta? <button class="lk" type="button" data-emode="criar">Criar conta</button>';
+  document.getElementById('epass').autocomplete=m==='criar'?'new-password':'current-password';document.getElementById('lerr').hidden=true}
+const AUTH_ERR={'auth/invalid-email':'Esse e-mail não parece válido.','auth/missing-email':'Digite seu e-mail.','auth/invalid-credential':'E-mail ou senha incorretos. Se ainda não tem conta, toque em “Criar conta”.','auth/invalid-login-credentials':'E-mail ou senha incorretos. Se ainda não tem conta, toque em “Criar conta”.','auth/wrong-password':'Senha incorreta.','auth/user-not-found':'Não existe conta com esse e-mail. Toque em “Criar conta”.','auth/email-already-in-use':'Já existe uma conta com esse e-mail. Toque em “Entrar”.','auth/weak-password':'A senha precisa ter pelo menos 6 caracteres.','auth/too-many-requests':'Muitas tentativas. Espere alguns minutos e tente de novo.','auth/network-request-failed':'Sem conexão. Verifique a internet e tente de novo.','auth/operation-not-allowed':'O login por e-mail ainda não está ativado. Use o Google por enquanto.'};
+async function emailLogin(ev){ev.preventDefault();document.getElementById('lerr').hidden=true;
+  const em=document.getElementById('email').value.trim(),pw=document.getElementById('epass').value;
+  if(!em)return loginErr('Digite seu e-mail.');if(pw.length<6)return loginErr('A senha precisa ter pelo menos 6 caracteres.');
+  const b=document.getElementById('ebtn'),label=b.textContent;b.disabled=true;b.innerHTML='<span class="spin" aria-hidden="true"></span>Aguarde…';
+  try{if(emailMode==='criar')await firebase.auth().createUserWithEmailAndPassword(em,pw);else await firebase.auth().signInWithEmailAndPassword(em,pw)}
+  catch(x){loginErr(AUTH_ERR[x.code]||'Não foi possível entrar ('+(x.code||'erro')+').')}
+  finally{b.disabled=false;b.textContent=label}}
+async function resetPass(){const em=document.getElementById('email').value.trim();
+  if(!em)return loginErr('Digite seu e-mail no campo acima e toque de novo em “Esqueceu a senha?”.');
+  try{await firebase.auth().sendPasswordResetEmail(em);const e=document.getElementById('lerr');e.textContent='Pronto. Se existir uma conta com esse e-mail, enviamos um link para você criar uma nova senha.';e.classList.add('ok');e.hidden=false}
+  catch(x){loginErr(AUTH_ERR[x.code]||'Não foi possível enviar o e-mail ('+(x.code||'erro')+').')}}
+const LEGAL={
+ termos:['Termos de uso',`<p>Resumo simples das regras de uso do Ritmo.</p><ul>
+  <li>O Ritmo é um app gratuito de planejamento pessoal, oferecido como está, sem garantia de que estará sempre disponível.</li>
+  <li>Você é responsável pelo que cadastra e por manter o acesso à sua conta Google ou ao seu e-mail e senha.</li>
+  <li>Não use o Ritmo para guardar senhas, dados bancários, documentos ou informações sensíveis de outras pessoas.</li>
+  <li>Os avisos dependem do seu aparelho e da conexão. Para compromissos críticos, use também o alarme ou a agenda do celular.</li>
+  <li>O app pode mudar ou deixar de existir. Quando possível, isso será avisado na própria tela.</li></ul><small>Última atualização: outubro de 2026.</small>`],
+ privacidade:['Política de privacidade',`<h3>O que guardamos</h3><p>Seu nome, e-mail e foto da conta usada para entrar, e o que você cadastra: tarefas, rotina, hábitos, metas e anotações.</p>
+  <h3>Onde fica</h3><p>No Google Firebase, com servidores em São Paulo. Os dados viajam e ficam guardados criptografados.</p>
+  <h3>Quem acessa</h3><p>Só você. As regras do banco de dados bloqueiam o acesso de qualquer outra conta. O Ritmo não vende nem compartilha seus dados e não usa anúncios nem rastreadores.</p>
+  <h3>No seu aparelho</h3><p>Uma cópia fica salva no aparelho para o app funcionar sem internet. Ao sair da conta, essa cópia é apagada.</p>
+  <h3>Excluir seus dados</h3><p>Peça a exclusão pelo repositório do projeto no GitHub (GabrielMendes04/ritmo) que tudo será apagado.</p><small>Última atualização: outubro de 2026.</small>`],
+ ajuda:['Ajuda',`<h3>O Ritmo é pago?</h3><p>Não. É grátis.</p>
+  <h3>Como coloco na tela inicial?</h3><p>No Android, toque em “Instalar o app” no topo desta tela, ou nos três pontinhos do Chrome e em “Adicionar à tela inicial”. No iPhone, abra no Safari, toque em Compartilhar e em “Adicionar à Tela de Início”.</p>
+  <h3>Esqueci minha senha</h3><p>Digite seu e-mail e toque em “Esqueceu a senha?”. Você recebe um link para criar outra. Se entrou com o Google, a senha é a da sua conta Google.</p>
+  <h3>Meus dados aparecem em outro aparelho?</h3><p>Sim. Entre com a mesma conta em qualquer aparelho e tudo aparece sincronizado.</p>`]};
+function openLegal(k){const L=LEGAL[k];if(!L)return;const dlg=document.getElementById('dlg');
+  dlg.innerHTML=`<div class="mhead"><h2>${L[0]}</h2><button class="iconbtn" data-close aria-label="Fechar">${svg('x')}</button></div><div class="mbody legal" style="padding:16px 20px 20px">${L[1]}</div>`;dlg.showModal()}
+document.addEventListener('click',e=>{const tg=e.target.closest&&e.target.closest('#etoggle');if(tg){const bx=document.getElementById('ebox');bx.hidden=!bx.hidden;tg.setAttribute('aria-expanded',String(!bx.hidden));tg.textContent=bx.hidden?'Prefere entrar com e-mail?':'Ocultar login por e-mail';if(!bx.hidden)document.getElementById('email').focus();return}});
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-legal],[data-emode]');if(!t)return;
+  if(t.dataset.legal)openLegal(t.dataset.legal);else setEmailMode(t.dataset.emode)});
+(function(){const r=document.querySelector('.bx-right');if(!r)return;
+  let ok=false;try{ok=matchMedia('(hover: hover) and (pointer: fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+  if(!ok)return;let raf=0;
+  r.addEventListener('mousemove',e=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{const b=r.getBoundingClientRect();const x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;r.style.setProperty('--px',(x*14).toFixed(1)+'px');r.style.setProperty('--py',(y*10).toFixed(1)+'px')})});
+  r.addEventListener('mouseleave',()=>{r.style.setProperty('--px','0px');r.style.setProperty('--py','0px')});})();
 async function logout(){try{await firebase.auth().signOut()}catch(e){}}
 if(cloud){
   showLogin(false);
   document.getElementById('gbtn').addEventListener('click',login);
+  document.getElementById('eform').addEventListener('submit',emailLogin);
+  document.getElementById('eforgot').addEventListener('click',resetPass);
   firebase.auth().getRedirectResult().catch(e=>{if(e&&e.code)loginErr('Não foi possível entrar ('+e.code+').')});
   firebase.auth().onAuthStateChanged(u=>{
     const was=fbUser;fbUser=u;
